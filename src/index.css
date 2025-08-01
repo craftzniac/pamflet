@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
-
-
-
+@theme {
+    --font-body: "Atkinson Hyperlegible", sans-serif;
+    --font-editor: "Fira Code", monospace;
+}

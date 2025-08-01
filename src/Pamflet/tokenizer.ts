@@ -29,13 +29,13 @@ const TokenizerState = {
     PropertyValue: "property_value",
     Keyword: "keyword",
     /**
-     * to begin tokenization of multichoice option; create a multichoice option token 
+     * to begin tokenization of list item; create a list item token 
      * */
-    BeginMultichoiceOption: "begin_multichoice_option",
+    BeginListItem: "begin_list_item",
     /**
      * switch to this state from the StartOfLine state when an "-" which has an " " after it, is encountered is encounted
      * */
-    MultichoiceOption: "multichoice_option"
+    ListItem: "list_item"
 
 } as const;
 
@@ -44,12 +44,12 @@ type TTokenizerState = typeof TokenizerState[keyof typeof TokenizerState];
 type TokenType =
     "nil"    // only used when setting the initial value for this.curr_token
     | "text"
-    | "propertyName"
-    | "propertyValue"
+    | "property_name"
+    | "property_value"
     | "keyword"
-    | "multichoice_option";
+    | "list_item";
 
-type Token = {
+export type Token = {
     type: TokenType,
     value: string
 };
@@ -79,14 +79,12 @@ export class Tokenizer {
             this.reconsume = false;
         }
         const char = this.inputchars[this.cursor];
-        console.log("char:", char);
         this.cursor++;
         return char;
     }
 
     switchState(newState: TTokenizerState) {
         this.state = newState;
-        console.log("switch to:: " + this.state);
     }
 
     // by default, it starts from the next character but can be made to start from current character
@@ -116,10 +114,10 @@ export class Tokenizer {
     }
 
 
-    tokenize() {
+    tokenize(): Token[] {
         // NOTE: No explicit check for EOF since we're tokenizing from regular string, and not directly from a file
         while (this.cursor < this.inputchars.length) {
-            let char;
+            let char: string;
             switch (this.state) {
                 case TokenizerState.Data:
                     if (this.cursor == 0) {
@@ -145,7 +143,7 @@ export class Tokenizer {
                         this.switchState(TokenizerState.Keyword);
                     } else if (char == ".") {
                         const nextChar = this.peekForward({ length: 1 });
-                        // TODO: probably use isLowerAlpha() instead to enforce that propertyName can only begin with lowercase letter. In that case, if nextChar is uppercase, it should be treated as plaintext
+                        // TODO: probably use isLowerAlpha() instead to enforce that property_name can only begin with lowercase letter. In that case, if nextChar is uppercase, it should be treated as plaintext
                         if (isAlpha(nextChar)) {
                             this.switchState(TokenizerState.BeginPropertyName);
                         } else {
@@ -156,7 +154,7 @@ export class Tokenizer {
                         const nextChar = this.peekForward({ length: 1 });
                         if (nextChar == " ") {
                             this.consumeForward({ length: 1 });
-                            this.switchState(TokenizerState.BeginMultichoiceOption);
+                            this.switchState(TokenizerState.BeginListItem);
                         } else {
                             this.switchState(TokenizerState.BeginPlainText);
                         }
@@ -165,9 +163,9 @@ export class Tokenizer {
                         this.switchState(TokenizerState.BeginPlainText);
                     }
                     break;
-                case TokenizerState.BeginMultichoiceOption:
-                    this.curr_token = { type: "multichoice_option", value: "" };
-                    this.switchState(TokenizerState.MultichoiceOption);
+                case TokenizerState.BeginListItem:
+                    this.curr_token = { type: "list_item", value: "" };
+                    this.switchState(TokenizerState.ListItem);
                     break;
                 case TokenizerState.BeginPlainText:
                     char = this.consumeNextChar();
@@ -188,7 +186,7 @@ export class Tokenizer {
                         this.curr_token.value += char;
                     }
                     break;
-                case TokenizerState.MultichoiceOption:
+                case TokenizerState.ListItem:
                     char = this.consumeNextChar();
                     if (char == "\n") {
                         this.flush_curr_token();
@@ -209,7 +207,6 @@ export class Tokenizer {
                         if (forwardPeek === paddedKeyword) {
                             isKeyword = true;
                             forwardConsumeLength = paddedKeyword.length;
-                            console.log("fconsumelength::", forwardConsumeLength);
                             break;
                         }
                     }
@@ -227,12 +224,12 @@ export class Tokenizer {
                     break;
                 }
                 case TokenizerState.BeginPropertyName:
-                    this.curr_token = { type: "propertyName", value: "" };
+                    this.curr_token = { type: "property_name", value: "" };
                     this.switchState(TokenizerState.PropertyName);
                     break;
                 case TokenizerState.PropertyName:
                     char = this.consumeNextChar();
-                    if (isAlpha(char) || char === "_") {
+                    if (isAlpha(char) || char === "_" || char === "-") {
                         this.curr_token.value += char;
                     } else if (char === " " || char == "\n" || char == "=") {
                         this.flush_curr_token();
@@ -244,7 +241,7 @@ export class Tokenizer {
                             this.switchState(TokenizerState.StartOfLine);
                         }
                     } else {
-                        todo("Invalid syntax");
+                        // silently ignore the character
                     }
                     break;
                 case TokenizerState.BeginPropertyValue:
@@ -255,7 +252,7 @@ export class Tokenizer {
                     } else if (char === "\n") {
                         this.switchState(TokenizerState.StartOfLine);
                     } else {
-                        this.curr_token = { type: "propertyValue", value: "" };
+                        this.curr_token = { type: "property_value", value: "" };
                         this.reconsume = true;
                         this.switchState(TokenizerState.PropertyValue);
                     }
@@ -274,11 +271,14 @@ export class Tokenizer {
                     }
                     break;
                 default:
-                    todo();
+                    // silently ignore the token
+                    this.switchState(TokenizerState.Data);
             }
         }
 
         this.flush_curr_token();
+        console.log("tokens::", this.tokens);
+        return this.tokens;
     }
 
     flush_curr_token() {
