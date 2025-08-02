@@ -42,20 +42,23 @@ export type TListElement = GeneralProps & {
     items: { id: string, value: string }[]
 };
 
-export type TMultichoiceElement = GeneralProps & (TSingleselect | TMultiselect) & {
+export type TMultichoiceElement = TMultichoiceSingleAnswerElement | TMultichoiceMultiAnswerElement;
+
+
+type TMultichoiceProps = {
     type: "multichoice",
     options: { id: string, value: string }[]
 };
 
-export type TSingleselect = {
+export type TMultichoiceSingleAnswerElement = GeneralProps & {
     variant: "single_answer",
     answerIndex: number
-};
+} & TMultichoiceProps;
 
-export type TMultiselect = {
+export type TMultichoiceMultiAnswerElement = GeneralProps & {
     variant: "multi_answer",
     answerIndexes: number[]
-};
+} & TMultichoiceProps;
 
 export type TTextElement = GeneralProps & {
     type: "text",
@@ -151,8 +154,12 @@ export class Parser {
                     setPropertyOnMultichoiceElement(this.curr_element, this.curr_element_property);
                     break;
                 }
+                case "nil": {
+                    // ignore
+                    break;
+                }
                 default:
-                    throw new Error("flush for element type not yet implemented:: " + this.curr_element.type);
+                    todo();
             }
             this.curr_element_property = nilElementProperty;
         }
@@ -203,24 +210,31 @@ export class Parser {
                 }
                 case ParserState.LinkElement: {
                     const token = this.consumeNextToken();
-                    if (token.type === "keyword" && token.value === Keyword.Lnk) {
+                    if (token.type !== "keyword" || token.value !== Keyword.Lnk) {
+                        throw new Error("Expected Lnk token but got " + token.type + " token instead");
+                    } else {
                         this.curr_element = createLinkElement();
                         this.switchState(ParserState.LinkContent);
-                    } else {
-                        todo();
                     }
                     break;
                 }
                 case ParserState.LinkContent: {
                     const token = this.consumeNextToken();
-                    if (token.type !== "text" || this.curr_element.type !== "link") {
-                        todo();
+                    if (token.type === "text" && this.curr_element.type === "link") {
+                        // try to split text into "label" and "href";
+                        const [label, url] = getLinkContentFromText(token.value);
+                        this.curr_element.label = label;
+                        this.curr_element.href = url;
+                        this.switchState(ParserState.ElementProps);
+                    } else if (token.type === "property_name") {
+                        this.flush_curr_element();
+                        this.reconsume();
+                        this.switchState(ParserState.ElementProps);
+                    } else {
+                        this.flush_curr_element();
+                        this.reconsume();
+                        this.switchState(ParserState.Data);
                     }
-                    // try to split text into "label" and "href";
-                    const [label, url] = getLinkContentFromText(token.value);
-                    this.curr_element.label = label;
-                    this.curr_element.href = url;
-                    this.switchState(ParserState.ElementProps);
                     break;
                 }
                 case ParserState.ListElement: {
@@ -241,8 +255,12 @@ export class Parser {
                         } else {
                             this.curr_element.items.push({ id: generateId(), value: token.value });
                         }
+                    } else if (token.type == "property_name") {
+                        this.reconsume();
+                        this.switchState(ParserState.PropName);
                     } else {
                         this.reconsume();
+                        this.flush_curr_element();
                         this.switchState(ParserState.Data);
                     }
                     break;

@@ -277,7 +277,7 @@ export class Tokenizer {
         }
 
         this.flush_curr_token();
-        console.log("tokens::", this.tokens);
+        // console.log("tokens::", this.tokens);
         return this.tokens;
     }
 
