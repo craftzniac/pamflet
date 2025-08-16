@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+    --color-*: initial;
+    --color-white: #FFF;
+
+    --color-purple-900: #0D0514;
+    --color-purple-800: #270E3B;
+    --color-purple-700: #411763;
+    --color-purple-600: #68269E;
+    --color-purple-500: #822FC6;
+    --color-purple-400: #9B59D1;
+    --color-purple-300: #C097E3;
+    --color-purple-200: #D9C1EE;
+    --color-purple-100: #F3EAF9;
+
+    --color-gray-900: #0E0C0F;
+    --color-gray-800: #29252D;
+    --color-gray-700: #453D4B;
+    --color-gray-600: #6E6278;
+    --color-gray-500: #897A96;
+    --color-gray-400: #A195AB;
+    --color-gray-300: #C4BCCB;
+    --color-gray-200: #DCD7DF;
+    --color-gray-100: #F3F2F5;
+
+    --color-red-700: #731919;
+    --color-red-600: #B82828;
+    --color-red-500: #E63232;
+    --color-red-400: #EB5B5B;
+    --color-red-300: #F39898;
+    --color-red-200: #F7C1C1;
+    --color-red-100: #FDEAEA;
+
+    --color-green-700: #266E17;
+    --color-green-600: #3DAF26;
+    --color-green-500: #4CDB2F;
+    --color-green-400: #70E259;
+    --color-green-300: #A5ED97;
+    --color-green-200: #C9F4C1;
+    --color-green-100: #EDFBEA;
+
+    --radius-*: initial;
+    --radius: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+
+    --font-code: "Fira Code", monospace;
+    --font-body: "Roboto", sans-serif;
+}

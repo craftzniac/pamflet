@@ -1,7 +1,9 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Parser, type TElement, type TLinkElement, type TListElement, type TMultichoiceElement, type TMultichoiceMultiAnswerElement, type TMultichoiceSingleAnswerElement, type TTextElement } from "./parser";
+import type { ClassNameValue } from "tailwind-merge";
+import { cn } from "~/utils";
 
-export default function Renderer({ inputchars }: { inputchars: string }) {
+export default function Renderer({ inputchars, className = "" }: { inputchars: string, className?: ClassNameValue }) {
   // const parserRef = useRef(new Parser(inputchars));
   const [elements, setElements] = useState<TElement[]>([]);
 
@@ -10,7 +12,7 @@ export default function Renderer({ inputchars }: { inputchars: string }) {
   }, [inputchars]);
 
   return (
-    <div className="p-6 h-full overflow-y-auto max-w-90 text-lg w-full transition-colors rounded-2xl bg-white gap-4 shadow-md border-gray-300 border-[1px] font-body relative flex justify-center items-center"
+    <div className={cn("p-6 min-h-100 max-h-100 w-full max-w-90 overflow-y-auto text-lg  transition-colors rounded-2xl bg-white gap-4 shadow-md border-gray-300 border-[1px] font-body relative flex justify-center items-center", className)}
     >
       <div className="flex flex-col w-full gap-2">
         {
