@@ -47,7 +47,7 @@ function shuffleColorCards(): TColorCard[] {
 function Deck({ deck }: { deck: TDeck }) {
     const [isMobile] = useMediaQuery();
     return (
-        <Link to={isMobile ? `/decks/${deck.id}/cards/1` : `/decks/${deck.id}/cards-slide/1`} className="min-h-0 rounded-lg group px-6 py-8 bg-gray-100 shadow w-full max-w-70 flex flex-col gap-10 hover:bg-gray-200 transition-colors duration-300">
+        <Link to={isMobile ? `/decks/${deck.id}/cards` : `/decks/${deck.id}/cards-slide/1`} className="min-h-0 rounded-lg group px-6 py-8 bg-gray-100 shadow w-full max-w-70 flex flex-col gap-10 hover:bg-gray-200 transition-colors duration-300">
             <div className="flex relative h-full w-full justify-center items-center">
                 <div className="relative border-purple-800 w-25 h-35">
                     {

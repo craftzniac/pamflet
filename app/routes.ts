@@ -8,8 +8,9 @@ export default [
     route("decks/:deckId", "routes/layouts/DeckLayout.tsx", [
       route("cards", "routes/views/decks/deck/cards.tsx"),   // used in  mobile screens
       route("cards-slide/:flashcardIndex", "routes/views/decks/deck/cards-slide.tsx"),
-      route("edit/cards", "routes/views/decks/deck/edit/cards.tsx"),
-      route("edit/cards-slide", "routes/views/decks/deck/edit/cards-slide.tsx"),   // used in mobile screens
+
+      route("edit/cards", "routes/views/decks/deck/edit/cards.tsx"),// used in mobile screens
+      route("edit/cards-slide/:flashcardIndex", "routes/views/decks/deck/edit/cards-slide.tsx"),
     ]),
 
     route("profile", "routes/views/profile.tsx"),

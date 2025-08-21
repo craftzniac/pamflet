@@ -37,9 +37,10 @@ type Pages = {
       "deckId": string;
     };
   };
-  "/decks/:deckId/edit/cards-slide": {
+  "/decks/:deckId/edit/cards-slide/:flashcardIndex": {
     params: {
       "deckId": string;
+      "flashcardIndex": string;
     };
   };
   "/profile": {
@@ -50,11 +51,11 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/decks" | "/decks/:deckId" | "/decks/:deckId/cards" | "/decks/:deckId/cards-slide/:flashcardIndex" | "/decks/:deckId/edit/cards" | "/decks/:deckId/edit/cards-slide" | "/profile";
+    page: "/" | "/decks" | "/decks/:deckId" | "/decks/:deckId/cards" | "/decks/:deckId/cards-slide/:flashcardIndex" | "/decks/:deckId/edit/cards" | "/decks/:deckId/edit/cards-slide/:flashcardIndex" | "/profile";
   };
   "routes/layouts/RootLayout.tsx": {
     id: "routes/layouts/RootLayout";
-    page: "/" | "/decks" | "/decks/:deckId" | "/decks/:deckId/cards" | "/decks/:deckId/cards-slide/:flashcardIndex" | "/decks/:deckId/edit/cards" | "/decks/:deckId/edit/cards-slide" | "/profile";
+    page: "/" | "/decks" | "/decks/:deckId" | "/decks/:deckId/cards" | "/decks/:deckId/cards-slide/:flashcardIndex" | "/decks/:deckId/edit/cards" | "/decks/:deckId/edit/cards-slide/:flashcardIndex" | "/profile";
   };
   "routes/views/index.tsx": {
     id: "routes/views/index";
@@ -66,7 +67,7 @@ type RouteFiles = {
   };
   "routes/layouts/DeckLayout.tsx": {
     id: "routes/layouts/DeckLayout";
-    page: "/decks/:deckId" | "/decks/:deckId/cards" | "/decks/:deckId/cards-slide/:flashcardIndex" | "/decks/:deckId/edit/cards" | "/decks/:deckId/edit/cards-slide";
+    page: "/decks/:deckId" | "/decks/:deckId/cards" | "/decks/:deckId/cards-slide/:flashcardIndex" | "/decks/:deckId/edit/cards" | "/decks/:deckId/edit/cards-slide/:flashcardIndex";
   };
   "routes/views/decks/deck/cards.tsx": {
     id: "routes/views/decks/deck/cards";
@@ -82,7 +83,7 @@ type RouteFiles = {
   };
   "routes/views/decks/deck/edit/cards-slide.tsx": {
     id: "routes/views/decks/deck/edit/cards-slide";
-    page: "/decks/:deckId/edit/cards-slide";
+    page: "/decks/:deckId/edit/cards-slide/:flashcardIndex";
   };
   "routes/views/profile.tsx": {
     id: "routes/views/profile";

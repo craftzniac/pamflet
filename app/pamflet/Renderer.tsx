@@ -12,9 +12,9 @@ export default function Renderer({ inputchars, className = "" }: { inputchars: s
   }, [inputchars]);
 
   return (
-    <div className={cn("p-6 min-h-100 max-h-100 w-full max-w-90 overflow-y-auto text-lg  transition-colors rounded-2xl bg-white gap-4 shadow-md border-gray-300 border-[1px] font-body relative flex justify-center items-center", className)}
+    <div className={cn("relative py-2 min-h-120 h-full max-h-120 w-full max-w-90 text-lg  transition-colors rounded-2xl bg-white gap-4 shadow-md border-gray-300 border-[1px] font-body flex", className)}
     >
-      <div className="flex flex-col w-full gap-2">
+      <div className="flex flex-col w-full h-fit  max-h-full m-auto gap-2 px-6 py-10 overflow-y-auto relative">
         {
           elements.map(el => mapToComponent(el))
         }
