@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import Button from "~/routes/components/Button";
 import { useDeckContext } from "~/routes/contexts/DeckProvider";
 import { cn } from "~/utils";
+import DeleteDeckBtn from "./DeleteDeckBtn";
 
 export default function CardsListing({ mode = "preview", currCardIndex }: { mode?: "edit" | "preview", currCardIndex: number }) {
     const { deck } = useDeckContext();
@@ -11,7 +12,7 @@ export default function CardsListing({ mode = "preview", currCardIndex }: { mode
         <div className="flex flex-col gap-4 w-full h-full">
             <div className="flex items-center gap-4 justify-between">
                 <Button variant="secondary" className="lg:w-full"> <PlusIcon /> Add card</Button>
-                {mode === "edit" && <Button variant="destructive"> Delete Deck</Button>}
+                {mode === "edit" && <DeleteDeckBtn className="lg:hidden" deckId={deck.id} />}
             </div>
             <div className="w-full h-full overflow-y-auto">
                 <ul className="flex flex-col gap-1">
@@ -26,6 +27,7 @@ export default function CardsListing({ mode = "preview", currCardIndex }: { mode
                     ))}
                 </ul>
             </div>
+            <DeleteDeckBtn deckId={deck.id} className="w-full" />
         </div>
     );
 }

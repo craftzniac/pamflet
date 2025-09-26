@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import CardsListing from "./CardsListing";
 import Editor from "~/pamflet/Editor";
 import Renderer from "~/pamflet/Renderer";
@@ -26,7 +26,9 @@ export default function CardsSlide({ mode, cardIndexString }: Props) {
     const [side, setSide] = useState<TCardSide>(CardSide.Front);
     const { deck } = useDeckContext();
     const [isFlipped, setIsFlipped] = useState(() => calcIsFlipped(side));
+    const [isEdit, setIsEdit] = useState(false);
     const navigate = useNavigate();
+    const [card, setCard] = useState<TFlashcard | null>(null);
 
     useEffect(() => setIsFlipped(calcIsFlipped(side)), [side]);
 
@@ -34,10 +36,11 @@ export default function CardsSlide({ mode, cardIndexString }: Props) {
         return getCardIndex(cardIndexString);
     }, [cardIndexString]);
 
-    const card = useMemo(() => {
-        setSide(CardSide.Front);
-        return getCardFromDeck(cardIndex, deck);
-    }, [cardIndex]);
+
+    useEffect(() => {
+        setSide(CardSide.Front)
+        setCard(getCardFromDeck(cardIndex, deck))
+    }, [cardIndex])
 
     function calcIsFlipped(side: TCardSide): boolean {
         if (side === CardSide.Front) {
@@ -73,6 +76,15 @@ export default function CardsSlide({ mode, cardIndexString }: Props) {
         navigate(`/decks/${deck.id}/cards-slide/${index + 1}`, { replace: true });
     }
 
+    function updateCardFront(front: string) {
+        setCard(prev => ({ ...prev, front: front } as TFlashcard));
+    }
+
+    function updateCardBack(back: string) {
+        setCard(prev => ({ ...prev, back } as TFlashcard));
+    }
+
+
     return (
         <div className="gap-4 flex p-4 h-full w-full overflow-y-auto">
             <div className="hidden lg:flex w-full h-full max-w-50">
@@ -86,18 +98,23 @@ export default function CardsSlide({ mode, cardIndexString }: Props) {
                 <div className="flex flex-col items-center h-full justify-start md:justify-center w-full gap-4">
                     {
                         mode === "edit" ? (
-                            <div className="w-full flex flex-col max-w-90">
+                            <div className={cn("w-full flex flex-col", mode == "edit" ? "max-w-180" : "max-w-90")}>
                                 {
                                     card ? (
                                         <div className="flex flex-col gap-2">
                                             <div className="flex items-center gap-2 justify-between">
                                                 <Button>Save</Button>
-                                                <EditPreviewToggle />
+                                                <div className="flex md:hidden bg-gray-100 gap-1 p-2 rounded">
+                                                    <Button variant="secondary" className={cn("text-xs h-8 w-15 font-medium border-transparent", isEdit ? "border-2 border-gray-400 bg-white" : "bg-transparent")} onClick={() => setIsEdit(true)}>Edit</Button>
+                                                    <Button variant="secondary" className={cn("text-xs h-8 w-15 font-medium border-transparent", isEdit ? "" : "border-2 border-gray-400 bg-white")} onClick={() => setIsEdit(false)}>Preview</Button>
+                                                </div>
                                                 <Button variant="destructive"><span className="hidden lg:block">Delete card</span></Button>
                                             </div>
                                             <div className="flex gap-2 items-center w-full" >
-                                                <FlashcardEditor card={card} isFlipped={isFlipped} />
-                                                <div className="flex flex-col items-center gap-2">
+                                                <div className="h-full flex w-full">
+                                                    <FlashcardEditor  updateBack={updateCardBack} updateFront={updateCardFront} card={card} isFlipped={isFlipped} />
+                                                </div>
+                                                <div className="flex flex-col items-center gap-2 w-full">
                                                     <FlashcardPreview card={card} isFlipped={isFlipped} />
                                                     <Button onClick={flipcard} variant="secondary" className="[&>svg]:w-5 [&>svg]:h-5"><RepeatIcon />  </Button>
                                                 </div>
@@ -137,51 +154,37 @@ export default function CardsSlide({ mode, cardIndexString }: Props) {
     );
 }
 
-
-function EditPreviewToggle({ }) {
-    const [isEdit, setIsEdit] = useState(false);
-
-    const selectedOptionStyle = "border-2 border-gray-400 bg-white";
+function FlashcardEditor({ card, isFlipped, updateFront, updateBack }: {
+    card: TFlashcard,
+    isFlipped: boolean,
+    updateFront: (front: string) => void,
+    updateBack: (back: string) => void
+}) {
     return (
-        <div className="hidden lg:flex bg-gray-100 gap-1">
-            <Button variant="secondary" className={cn("text-xs font-medium", isEdit ? selectedOptionStyle : "bg-transparent")} onClick={() => setIsEdit(true)}>Edit</Button>
-            <Button variant="secondary" className={cn("text-xs font-medium", isEdit ? "" : selectedOptionStyle)} onClick={() => setIsEdit(false)}>Preview</Button>
+        <div className="perspective-distant transform-3d relative h-120 max-h-120 w-full max-w-90">
+            <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", isFlipped ? "rotate-y-180" : "")}>
+                <Editor text={card.front} updateText={(front) => updateFront(front)} />
+                <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{CardSide.Front}</span>
+            </div >
+            <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", isFlipped ? "rotate-y-0" : "-rotate-y-180")}>
+                <Editor text={card.back} updateText={(back) => updateBack(back)} />
+                <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{CardSide.Back}</span>
+            </div >
         </div>
-    );
-}
-
-function FlashcardEditor({ card, isFlipped }: { card: TFlashcard, isFlipped: boolean }) {
-    return (
-        <div className="perspective-distant transform-3d relative min-h-120 max-h-120 w-full max-w-90">
-            <FlashcardEditFace className={isFlipped ? "rotate-y-180" : ""} side={CardSide.Front} content={card.front} />
-            <FlashcardEditFace className={isFlipped ? "rotate-y-0" : "-rotate-y-180"} side={CardSide.Back} content={card.back} />
-        </div>
-    );
-}
-
-function FlashcardEditFace({ side, content, className = "" }: { side: TCardSide, content: string, className?: string }) {
-    return (
-        <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", className)}>
-            <Editor inputchars={content} setInputchars={() => { }} />
-            <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{side}</span>
-        </div >
     );
 }
 
 function FlashcardPreview({ card, isFlipped }: { card: TFlashcard, isFlipped: boolean }) {
     return (
-        <div className="perspective-distant transform-3d relative min-h-120 max-h-120 w-full max-w-90">
-            <FlashcardPreviewFace className={isFlipped ? "rotate-y-180" : ""} side={CardSide.Front} content={card.front} />
-            <FlashcardPreviewFace className={isFlipped ? "rotate-y-0" : "-rotate-y-180"} side={CardSide.Back} content={card.back} />
+        <div className="perspective-distant transform-3d relative h-120 max-h-120 w-full max-w-90">
+            <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", isFlipped ? "rotate-y-180" : "")}>
+                <Renderer inputchars={card.front} className="relative" />
+                <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{CardSide.Front}</span>
+            </div >
+            <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", isFlipped ? "rotate-y-0" : "-rotate-y-180")}>
+                <Renderer inputchars={card.back} className="relative" />
+                <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{CardSide.Back}</span>
+            </div >
         </div>
-    );
-}
-
-function FlashcardPreviewFace({ side, content, className = "" }: { side: TCardSide, content: string, className?: string }) {
-    return (
-        <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", className)}>
-            <Renderer inputchars={content} className="relative" />
-            <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{side}</span>
-        </div >
     );
 }
