@@ -60,6 +60,8 @@
   --color-green-200: #C9F4C1;
   --color-green-100: #EDFBEA;
 
+  --color-transparent: transparent;
+
 }
 
 @theme inline {
@@ -102,6 +104,7 @@
   --color-sidebar-border: var(--color-gray-200);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  --color-gray-100: var(--color-gray-100);
   --color-white: var(--color-white);
   --font-code: var(--font-code);
   --font-body: var(--font-body);
@@ -115,6 +118,7 @@
   button {
     @apply cursor-pointer;
   }
+
 
   body {
     @apply bg-[var(--color-white)] text-[var(--color-gray-900)];

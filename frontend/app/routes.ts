@@ -25,6 +25,8 @@ export default [
     route("/login", "routes/views/auth/login.tsx"),
     route("/signup", "routes/views/auth/signup.tsx"),
   ]),
+  route("/cards-review/setup", "routes/views/setupCardsReview.tsx"),
+  route("/cards-review", "routes/views/cardsReview.tsx"),
 
   // layout("routes/views/layouts/MainLayout.tsx", [
   //   route("/", "routes/views/")
