@@ -1,52 +1,122 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --radius: 0.5rem;
+  --color-white: #FFF;
+  --color-gray-900: #0E0C0F;
+  --color-gray-800: #29252D;
+  --color-gray-600: #6E6278;
+  --color-gray-500: #848484;
+  --color-gray-200: #DFDFDF;
+  --color-gray-100: #F3F2F5;
+  --color-red-500: #E63232;
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  --font-code: "Fira Code", monospace;
+  --font-body: "Roboto", sans-serif;
+
+}
 
 @theme {
-    --color-*: initial;
-    --color-white: #FFF;
+  --color-*: initial;
+  --radius-*: initial;
 
-    --color-purple-900: #0D0514;
-    --color-purple-800: #270E3B;
-    --color-purple-700: #411763;
-    --color-purple-600: #68269E;
-    --color-purple-500: #822FC6;
-    --color-purple-400: #9B59D1;
-    --color-purple-300: #C097E3;
-    --color-purple-200: #D9C1EE;
-    --color-purple-100: #F3EAF9;
+  /* raw colors*/
+  --color-purple-900: #0D0514;
+  --color-purple-800: #270E3B;
+  --color-purple-700: #411763;
+  --color-purple-600: #68269E;
+  --color-purple-500: #822FC6;
+  --color-purple-400: #9B59D1;
+  --color-purple-300: #C097E3;
+  --color-purple-200: #D9C1EE;
+  --color-purple-100: #F3EAF9;
 
-    --color-gray-900: #0E0C0F;
-    --color-gray-800: #29252D;
-    --color-gray-700: #453D4B;
-    --color-gray-600: #6E6278;
-    --color-gray-500: #897A96;
-    --color-gray-400: #A195AB;
-    --color-gray-300: #C4BCCB;
-    --color-gray-200: #DCD7DF;
-    --color-gray-100: #F3F2F5;
+  --color-gray-700: #453D4B;
+  --color-gray-400: #A195AB;
+  --color-gray-300: #C4BCCB;
 
-    --color-red-700: #731919;
-    --color-red-600: #B82828;
-    --color-red-500: #E63232;
-    --color-red-400: #EB5B5B;
-    --color-red-300: #F39898;
-    --color-red-200: #F7C1C1;
-    --color-red-100: #FDEAEA;
+  --color-red-700: #731919;
+  --color-red-600: #B82828;
+  --color-red-400: #EB5B5B;
+  --color-red-300: #F39898;
+  --color-red-200: #F7C1C1;
+  --color-red-100: #FDEAEA;
 
-    --color-green-700: #266E17;
-    --color-green-600: #3DAF26;
-    --color-green-500: #4CDB2F;
-    --color-green-400: #70E259;
-    --color-green-300: #A5ED97;
-    --color-green-200: #C9F4C1;
-    --color-green-100: #EDFBEA;
+  --color-green-700: #266E17;
+  --color-green-600: #3DAF26;
+  --color-green-500: #4CDB2F;
+  --color-green-400: #70E259;
+  --color-green-300: #A5ED97;
+  --color-green-200: #C9F4C1;
+  --color-green-100: #EDFBEA;
 
-    --radius-*: initial;
-    --radius: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
-    --radius-2xl: 2rem;
+}
 
-    --font-code: "Fira Code", monospace;
-    --font-body: "Roboto", sans-serif;
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-gray-900);
+  --color-card: var(--color-white);
+  --color-card-foreground: var(--color-gray-900);
+  --color-popover: var(--color-white);
+  --color-popover-foreground: var(--color-gray-900);
+  --color-primary: var(--color-purple-500);
+  --color-primary-foreground: var(--color-white);
+  --color-secondary: var(--color-gray-100);
+  --color-secondary-foreground: var(--color-gray-800);
+  --color-muted: var(--color-gray-100);
+  --color-muted-foreground: var(--color-gray-500);
+  --color-accent: var(--color-gray-100);
+  --color-accent-foreground: var(--color-gray-800);
+  --color-destructive: var(--color-red-500);
+  --color-border: var(--color-gray-200);
+  --color-input: var(--color-gray-200);
+  --color-ring: var(--color-gray-600);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--color-gray-900);
+  --color-sidebar-primary: var(--color-gray-800);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--color-gray-100);
+  --color-sidebar-accent-foreground: var(--color-gray-800);
+  --color-sidebar-border: var(--color-gray-200);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-white: var(--color-white);
+  --font-code: var(--font-code);
+  --font-body: var(--font-body);
+}
+
+@layer base {
+  * {
+    @apply border-[var(--color-gray-200)] outline-[var(--color-gray-600)]/50;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  body {
+    @apply bg-[var(--color-white)] text-[var(--color-gray-900)];
+  }
 }

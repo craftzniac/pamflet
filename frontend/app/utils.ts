@@ -1,5 +1,6 @@
 import { twMerge, type ClassNameValue } from "tailwind-merge"
 import type { TDeck } from "./types";
+
 export function cn(...cls: ClassNameValue[]) {
 	return twMerge(cls);
 }
