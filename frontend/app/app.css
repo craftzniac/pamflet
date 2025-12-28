@@ -10,6 +10,8 @@
   --color-gray-500: #848484;
   --color-gray-200: #DFDFDF;
   --color-gray-100: #F3F2F5;
+  --color-gray-50: #F9F9F9;
+
   --color-red-500: #E63232;
 
   --chart-1: oklch(0.646 0.222 41.116);
@@ -104,6 +106,7 @@
   --color-sidebar-border: var(--color-gray-200);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  --color-gray-50: var(--color-gray-50);
   --color-gray-100: var(--color-gray-100);
   --color-white: var(--color-white);
   --font-code: var(--font-code);

@@ -61,7 +61,7 @@ export default function SetupCardsReviewPage() {
                     <h1 className="font-medium">Setup Cards Review</h1>
                 </div>
             </header>
-            <main className="flex flex-col p-4 h-full w-full overflow-y-auto gap-8">
+            <main className="flex flex-col p-4 h-full w-full overflow-y-auto gap-8 bg-gray-50">
                 <section className="flex flex-col gap-3">
                     <div className="flex justify-between">
                         <h2 className="font-medium">Choose Decks</h2>

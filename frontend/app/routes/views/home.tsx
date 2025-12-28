@@ -18,16 +18,16 @@ export default function HomePage() {
                 </div>
             </header>
             <main className="h-full w-full overflow-y-auto flex justify-center items-center">
-                <div className="w-full max-w-[50rem] p-4 lg:p-8 flex flex-col gap-8 items-center">
+                <div className="w-full p-4 lg:p-8 flex flex-col gap-8 items-center">
                     <div className="flex flex-col items-center">
                         <div className="flex items-center gap-4 flex-col">
-                            <Logo className="w-[10rem] lg:w-[8rem]" />
+                            <img src="/logo.svg" alt="logo" className="w-20 md:w-36 lg:w-[10rem]"/>
                             <h1 className="text-[2rem] lg:text-[6rem] font-medium">Pamflet</h1>
                         </div>
                         <p className="text-gray-700 text-center lg:text-start lg:text-xl">Elevate your flashcard game by using interactive flashcards</p>
                     </div>
                     <Button variant={"outline"} size="lg" className="flex items-center gap-1 bg-color-white p-6">
-                        <img src="/playstore.svg" alt="google playstore" className="w-8" />
+                        <img src={Playstore} alt="google playstore" className="w-8" />
                         <span className="text-lg"> Get Android app </span>
                     </Button>
                 </div>
