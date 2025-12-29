@@ -1,52 +1,18 @@
 import { type RouteConfig, index, layout, route } from "@react-router/dev/routes";
 
-// export default [
-//   route("/", "routes/layouts/RootLayout.tsx", [
-//     index("routes/views/index.tsx"),
-//     route("decks", "routes/views/decks/index.tsx"),
-//
-//     route("decks/:deckId", "routes/layouts/DeckLayout.tsx", [
-//       route("cards", "routes/views/decks/deck/cards.tsx"),   // used in  mobile screens
-//       route("cards-slide/:flashcardIndex", "routes/views/decks/deck/cards-slide.tsx"),
-//
-//       route("edit/cards", "routes/views/decks/deck/edit/cards.tsx"),// used in mobile screens
-//       route("edit/cards-slide/:flashcardIndex", "routes/views/decks/deck/edit/cards-slide.tsx"),
-//     ]),
-//
-//     route("profile", "routes/views/profile.tsx"),
-//   ]),
-// ] satisfies RouteConfig; 
-//
-
-
 export default [
-  index("routes/views/home.tsx"),
+  index("routes/views/HomePage.tsx"),
   layout("routes/layouts/AuthLayout.tsx", [
-    route("/login", "routes/views/auth/login.tsx"),
-    route("/signup", "routes/views/auth/signup.tsx"),
+    route("/login", "routes/views/auth/LoginPage.tsx"),
+    route("/signup", "routes/views/auth/SignupPage.tsx"),
   ]),
   layout("routes/layouts/MainAppLayout.tsx", [
-    route("/cards-review/setup", "routes/views/setupCardsReview.tsx"),
-    route("/cards-review", "routes/views/cardsReview.tsx"),
-    route("/profile", "routes/views/profile.tsx"),
+    route("/cards-review/setup", "routes/views/SetupCardsReviewPage.tsx"),
+    route("/cards-review", "routes/views/CardsReviewPage.tsx"),
+    route("/manage-decks", "routes/views/ManageDecksPage.tsx"),
+    // route("/manage-decks/:deckId/cards", "routes/views/ManageDeckCardsPage.tsx"),  
+    route("/manage-decks/:deckId/cards/:cardId?", "routes/views/ManageDeckCardsPage.tsx"),  // used for card edit on large screens
+    route("/manage-decks/:deckId/edit-cards/:cardId", "routes/views/EditCardPage.tsx"),    // used for card edit on small screens
+    route("/profile", "routes/views/ProfilePage.tsx"),
   ]),
-
-  // layout("routes/views/layouts/MainLayout.tsx", [
-  //   route("/", "routes/views/")
-  // ]),
-
-  // route("/", "routes/layouts/RootLayout.tsx", [
-  //   index("routes/views/index.tsx"),
-  //   route("decks", "routes/views/decks/index.tsx"),
-  //
-  //   route("decks/:deckId", "routes/layouts/DeckLayout.tsx", [
-  //     route("cards", "routes/views/decks/deck/cards.tsx"),   // used in  mobile screens
-  //     route("cards-slide/:flashcardIndex", "routes/views/decks/deck/cards-slide.tsx"),
-  //
-  //     route("edit/cards", "routes/views/decks/deck/edit/cards.tsx"),// used in mobile screens
-  //     route("edit/cards-slide/:flashcardIndex", "routes/views/decks/deck/edit/cards-slide.tsx"),
-  //   ]),
-  //
-  //   route("profile", "routes/views/profile.tsx"),
-  // ]),
 ] satisfies RouteConfig; 

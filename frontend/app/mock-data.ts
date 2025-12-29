@@ -6,7 +6,8 @@ export const flashcards: TFlashcard[] = [
 		front: `What is the biggest fish in the ocean called?
 .color = brown
 .fontSize = 24px`,
-		back: "Shark"
+		back: "Shark",
+		deckId: "akldsjfaolsdfjasd"
 	},
 	{
 		id: "andfo23ijaiofjasdf",
@@ -16,7 +17,8 @@ export const flashcards: TFlashcard[] = [
 - Float
 - Boolean
 .answer = 0`,
-		back: ""
+		back: "",
+		deckId: "akldsjfaolsdfjasd"
 	},
 	{
 		id: "0ajsdlfaksdfjaoi",
@@ -24,7 +26,8 @@ export const flashcards: TFlashcard[] = [
 - True
 - False
 .answer = 1`,
-		back: "Python uses indentation instead of curly braces {} to define code blocks"
+		back: "Python uses indentation instead of curly braces {} to define code blocks",
+		deckId: "akldsjfaolsdfjasd"
 	},
 	{
 		id: "andsfo2wijhasdf",
@@ -37,7 +40,8 @@ export const flashcards: TFlashcard[] = [
 .answer = 0,1,2,4`,
 		back: `&str is a reference type, not scalar
 Lnk https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html rust doc
-`
+`,
+		deckId: "akldsjfaolsdfjasd"
 	},
 ];
 

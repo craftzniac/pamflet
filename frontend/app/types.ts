@@ -2,6 +2,7 @@ export type TFlashcard = {
 	id: string,
 	front: string,
 	back: string,
+	deckId: string
 }
 
 export type TDeck = {
