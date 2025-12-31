@@ -13,6 +13,7 @@ export default [
     // route("/manage-decks/:deckId/cards", "routes/views/ManageDeckCardsPage.tsx"),  
     route("/manage-decks/:deckId/cards/:cardId?", "routes/views/ManageDeckCardsPage.tsx"),  // used for card edit on large screens
     route("/manage-decks/:deckId/edit-cards/:cardId", "routes/views/EditCardPage.tsx"),    // used for card edit on small screens
+    route("/manage-decks/:deckId/add-card", "routes/views/AddCardPage.tsx"),    
     route("/profile", "routes/views/ProfilePage.tsx"),
   ]),
 ] satisfies RouteConfig; 

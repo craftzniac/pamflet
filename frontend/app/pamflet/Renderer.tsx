@@ -13,11 +13,12 @@ export default function Renderer({ inputchars, className = "" }: { inputchars: s
   }, [inputchars]);
 
   return (
-    <div className={cn("relative py-2 h-full w-full text-lg transition-colors rounded-2xl bg-white gap-4 shadow-md font-body flex", className)}
+    <div
+      className={cn("relative py-2 h-full w-full text-lg transition-colors rounded-2xl bg-white gap-4 shadow-md font-body flex", className)}
     >
       <div className="flex flex-col w-full h-full m-auto gap-2 px-6 py-10 overflow-y-auto relative">
         {
-          elements.map(el => mapToComponent(el))
+          elements.length > 0 ? elements.map(el => mapToComponent(el)) : <p className="italic text-gray-600/70">{`<Empty />`}</p>
         }
       </div>
     </div >

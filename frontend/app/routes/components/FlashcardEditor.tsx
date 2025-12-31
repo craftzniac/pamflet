@@ -10,14 +10,14 @@ export function FlashcardEditor({ card, isFlipped, updateFront, updateBack }: {
     updateBack: (back: string) => void
 }) {
     return (
-        <div className="perspective-distant transform-3d relative h-120 max-h-120 w-full max-w-90">
-            <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", isFlipped ? "rotate-y-180" : "")}>
+        <div className="perspective-distant transform-3d relative w-60 lg:w-70 2xl:w-100 aspect-[3/4]">
+            <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden w-full  h-full", isFlipped ? "rotate-y-180" : "")}>
                 <Editor text={card.front} updateText={(front) => updateFront(front)} />
-                <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{CardSide.Front}</span>
+                <span className="rounded-full bg-gray-700 text-white absolute text-sm top-1 left-1 px-2 py-0.5">{CardSide.Front}</span>
             </div >
             <div className={cn("absolute inset-0 transition-all duration-800 backface-hidden", isFlipped ? "rotate-y-0" : "-rotate-y-180")}>
                 <Editor text={card.back} updateText={(back) => updateBack(back)} />
-                <span className="rounded-full bg-gray-600 text-white absolute top-1 left-4 px-2 py-0.5">{CardSide.Back}</span>
+                <span className="rounded-full bg-gray-700 text-white absolute text-sm top-1 left-1 px-2 py-0.5">{CardSide.Back}</span>
             </div >
         </div>
     );

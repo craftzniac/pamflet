@@ -1,13 +1,23 @@
 import { PencilIcon, PlusIcon, TrashIcon, SaveIcon } from "lucide-react"
 import { Link } from "react-router"
 import { Button } from "~/components/ui/button"
-import { flashcards } from "~/mock-data"
+import { decks, flashcards } from "~/mock-data"
 import BackButton from "../components/BackButton"
 import { useMediaQuery } from "~/hooks"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
+import { Label } from "~/components/ui/label"
+import Renderer from "~/pamflet/Renderer"
+import { FlashcardPreview } from "../components/FlashcardPreview"
+import { useState } from "react"
+import { FlashcardEditor } from "../components/FlashcardEditor"
+import CardForm from "../components/CardForm"
 
 export default function ManageDeckCards() {
+    const deckId = "somethinothing"
     const [isMobile] = useMediaQuery()
     const currentCard = flashcards[0];
+    const [card, setCard] = useState(flashcards[0])
+
     return (
         <div className="flex flex-col h-full w-full">
             <header className="p-2 md:p-4 flex justify-center gap-1">
@@ -29,7 +39,7 @@ export default function ManageDeckCards() {
                 <section className="h-full w-full lg:max-w-100 2xl:max-w-130 flex flex-col gap-4 items-center bg-gray-50 overflow-y-auto">
                     <div className="flex justify-end w-full">
                         <Button asChild>
-                            <Link to="/manage-decks/add-deck">
+                            <Link to={`/manage-decks/${deckId}/add-card`}>
                                 <PlusIcon />
                                 <span>Add Card</span>
                             </Link>
@@ -60,25 +70,15 @@ export default function ManageDeckCards() {
                 <section className="hidden lg:flex w-full h-full justify-center overflow-y-auto">
                     {
                         !currentCard ? (
-                            <div className="flex flex-col w-full">
-                                <header className="flex items-center gap-1 justify-between">
-                                    <h2 className="text-2xl">Edit Card</h2>
-                                    <Button asChild>
-                                        <Link to="/manage-decks/add-deck">
-                                            <SaveIcon />
-                                            <span>Save</span>
-                                        </Link>
-                                    </Button>
-                                </header>
-                                <div className="flex flex-col">
-                                    <form>
-
-                                    </form>
-                                </div>
-                            </div>
-                        ) : (
                             <div className="flex w-full h-full justify-center px-4 items-center">
                                 <p className="text-center text-xl text-gray-600">Select any card to edit here</p>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col w-full gap-4">
+                                <header className="flex items-center gap-1 justify-between">
+                                    <h2 className="text-xl">Edit Card</h2>
+                                </header>
+                                <CardForm mode="edit" initialCardState={card} />
                             </div>
                         )
                     }
