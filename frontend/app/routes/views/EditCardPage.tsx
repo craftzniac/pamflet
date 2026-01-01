@@ -2,7 +2,6 @@ import { Button } from "~/components/ui/button";
 import BackButton from "../components/BackButton";
 import { TrashIcon } from "lucide-react";
 import CardForm from "../components/CardForm";
-import { useState } from "react";
 import { flashcards } from "~/mock-data";
 
 export default function EditCardPage() {

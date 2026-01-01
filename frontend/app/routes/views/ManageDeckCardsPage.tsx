@@ -51,7 +51,7 @@ export default function ManageDeckCards() {
                                 return (
                                     <li key={card.id}>
                                         <div className="shadow bg-white w-full rounded-md flex items-center gap-1 lg:gap-2 p-2 lg:px-4 lg:py-2">
-                                            <Link to={isMobile ? `/manage-decks/${card.deckId}/edit-cards/${card.id}` : `/manage-decks/${card.deckId}/cards/${card.id}`}
+                                            <Link to={isMobile ? `/edit-cards/${card.id}` : `/manage-decks/${card.deckId}/cards/${card.id}`}
                                                 className={card.front.trim() == "" ? "text-sm lg:text-base w-full text-gray-600 italic" : "text-sm lg:text-base w-full line-clamp-1"}
                                             >
                                                 {card.front.trim() == "" ? `<Empty />` : card.front}
