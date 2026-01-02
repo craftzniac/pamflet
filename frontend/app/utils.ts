@@ -1,6 +1,11 @@
 import { twMerge, type ClassNameValue } from "tailwind-merge"
 import type { TDeck } from "./types";
 
+
+export function isCurrentParentNavPath(currentPath: string, text: string) {
+	return currentPath.startsWith(text)
+}
+
 export function cn(...cls: ClassNameValue[]) {
 	return twMerge(cls);
 }

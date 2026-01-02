@@ -17,9 +17,9 @@ function isInfoMsg(msg: any): msg is InfoMsg {
 
 export default function TextField({ id, label, type = "text", msg = undefined, disabled = false }: Props) {
     return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-full">
             <Label aria-disabled={disabled} htmlFor={id}>{label}</Label>
-            <Input id={id} type={type} disabled={disabled} />
+            <Input id={id} type={type} disabled={disabled} className="w-full" />
             {
                 msg !== undefined && (isInfoMsg(msg) ? (
                     <p className="text-sm text-foreground">{msg.message}</p>

@@ -1,3 +1,7 @@
+import Cardholder from "./components/icons/Cardholder";
+import CardReview from "./components/icons/CardReview";
+import Person from "./components/icons/Person";
+
 export const CardSide = {
     Front: "front",
     Back: "back"
@@ -7,19 +11,19 @@ export const CardSide = {
 export const navItems = [
     {
         id: "card_review",
-        icon: "/nav_card_review.svg",
+        icon: CardReview,
         text: "Card Review",
         url: "/cards-review/setup"
     },
     {
         id: "manage_decks",
-        icon: "/nav_cardholder.svg",
+        icon: Cardholder,
         text: "Manage Decks",
         url: "/manage-decks"
     },
     {
         id: "profile",
-        icon: "/nav_person.svg",
+        icon: Person,
         text: "Profile",
         url: "/profile",
     }
