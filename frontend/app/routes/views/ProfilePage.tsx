@@ -2,6 +2,8 @@ import { Button } from "~/components/ui/button";
 import TextField from "../components/TextField";
 import { SaveIcon, TrashIcon } from "lucide-react";
 import BottomNav from "../components/BottomNav";
+import ConfirmDeleteAllDecksDialog from "../components/ConfirmDeleteAllDecksDialog";
+import ConfirmDeleteAccountDialog from "../components/ConfirmDeleteAccountDialog";
 
 export default function ProfilePage() {
     return (
@@ -22,20 +24,13 @@ export default function ProfilePage() {
                                     <span className="hidden md:block"> Save changes</span>
                                 </Button>
                             </div>
-                            <Button variant="destructive" className="w-fit">Delete account</Button>
                         </div>
                     </section>
                     <section className="flex flex-col gap-6">
                         <h2 className="text-destructive text-2xl font-medium">Danger Zone</h2>
                         <div className="flex flex-col gap-4">
-                            <Button variant="outlineDestructive" className="w-fit">
-                                <TrashIcon />
-                                <span>Delete All Decks</span>
-                            </Button>
-                            <Button variant="outlineDestructive" className="w-fit">
-                                <TrashIcon />
-                                <span>Delete Account</span>
-                            </Button>
+                            <ConfirmDeleteAllDecksDialog />
+                            <ConfirmDeleteAccountDialog />
                         </div>
                     </section>
                 </div>

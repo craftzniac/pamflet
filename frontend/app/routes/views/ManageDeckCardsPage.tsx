@@ -11,6 +11,8 @@ import { FlashcardPreview } from "../components/FlashcardPreview"
 import { useState } from "react"
 import { FlashcardEditor } from "../components/FlashcardEditor"
 import CardForm from "../components/CardForm"
+import ConfirmDeckDeleteDialog from "../components/ConfirmDeckDeleteDialog"
+import EditDeckDialog from "../components/EditDeckDialog"
 
 export default function ManageDeckCards() {
     const deckId = "somethinothing"
@@ -27,12 +29,10 @@ export default function ManageDeckCards() {
                     <p className="text-xs">practicing english words</p>
                 </div>
                 <div className="flex items-center gap-0.5">
-                    <Button variant="ghost">
-                        <PencilIcon className="w-6" />
-                    </Button>
-                    <Button variant="ghost">
-                        <TrashIcon className="w-6 text-destructive" />
-                    </Button>
+                    <EditDeckDialog />
+                    <div className="w-fit">
+                        <ConfirmDeckDeleteDialog />
+                    </div>
                 </div>
             </header>
             <main className="h-full flex p-4 gap-4 items-center bg-gray-50 overflow-y-auto">

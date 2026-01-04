@@ -9,3 +9,6 @@ export type TDeck = {
 	id: string, name: string, cards: TFlashcard[]
 }
 
+export type TDeckWithCardCount = {
+	id: string, name: string, cardCount: number
+}

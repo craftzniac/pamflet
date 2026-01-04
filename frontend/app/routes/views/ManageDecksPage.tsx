@@ -1,9 +1,13 @@
 import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
-import { DropdownMenu, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { decks } from "~/mock-data";
-import { MoreVerticalIcon as OverflowIcon, PlusIcon } from "lucide-react"
+import { MoreVerticalIcon as OverflowIcon, PencilIcon, PenIcon, PlusIcon, TrashIcon } from "lucide-react"
 import BottomNav from "../components/BottomNav";
+import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import ConfirmDeckDeleteDialog from "../components/ConfirmDeckDeleteDialog";
+import AddDeckDialog from "../components/AddDeckDialog";
+import EditDeckDialog from "../components/EditDeckDialog";
 
 export default function ManageDecks() {
     return (
@@ -13,12 +17,7 @@ export default function ManageDecks() {
             </header>
             <main className="h-full flex flex-col p-4 gap-4 items-center bg-gray-50 overflow-y-auto">
                 <div className="flex justify-end w-full">
-                    <Button asChild>
-                        <Link to="/manage-decks/add-deck">
-                            <PlusIcon />
-                            <span>Add Deck</span>
-                        </Link>
-                    </Button>
+                    <AddDeckDialog />
                 </div>
                 <ul className="flex flex-col gap-1 w-full">
                     {
@@ -51,6 +50,14 @@ function OverflowMenu() {
             <DropdownMenuTrigger asChild>
                 <Button size={"icon"} variant={"ghost"}> <OverflowIcon /> </Button>
             </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-2" align="end">
+                <DropdownMenuItem className="flex items-center" asChild>
+                    <EditDeckDialog showLabel />
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center" asChild>
+                    <ConfirmDeckDeleteDialog showLabel />
+                </DropdownMenuItem>
+            </DropdownMenuContent>
         </DropdownMenu>
     )
 }
